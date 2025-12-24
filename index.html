@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Noel Chill 24/12</title>
+
 <style>
 *{
   margin:0;
@@ -18,15 +19,14 @@ body{
   color:white;
 }
 
-/* ===== TUYẾT CHILL ===== */
+/* ===== TUYẾT ===== */
 .snow{
   position:fixed;
   top:-10px;
   color:white;
-  opacity:0.8;
+  opacity:0.7;
   animation:fall linear infinite;
 }
-
 @keyframes fall{
   to{ transform:translateY(110vh); }
 }
@@ -41,37 +41,36 @@ body{
 }
 
 .envelope{
-  font-size:180px;
+  font-size:190px;
   animation:float 3s ease-in-out infinite;
 }
 
 @keyframes float{
   0%,100%{ transform:translateY(0); }
-  50%{ transform:translateY(-10px); }
+  50%{ transform:translateY(-12px); }
 }
 
 .open-btn{
-  margin-top:20px;
-  padding:12px 30px;
+  margin-top:18px;
+  padding:12px 32px;
   border:none;
   border-radius:30px;
-  background:rgba(255,255,255,0.15);
+  background:rgba(255,255,255,0.18);
   color:white;
   font-size:16px;
   cursor:pointer;
   backdrop-filter:blur(10px);
-  transition:0.3s;
+  transition:.3s;
 }
-
 .open-btn:hover{
-  background:rgba(255,255,255,0.3);
+  background:rgba(255,255,255,0.35);
 }
 
 /* ===== POPUP ===== */
 .popup{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,.65);
   display:none;
   justify-content:center;
   align-items:center;
@@ -80,9 +79,9 @@ body{
 .popup-content{
   width:340px;
   padding:30px;
-  border-radius:20px;
-  background:rgba(255,255,255,0.1);
-  backdrop-filter:blur(15px);
+  border-radius:22px;
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(16px);
   animation:fadeUp .4s ease;
 }
 
@@ -100,13 +99,14 @@ body{
 
 .music-note{
   position:fixed;
-  bottom:15px;
-  right:15px;
-  opacity:0.6;
-  font-size:14px;
+  bottom:14px;
+  right:16px;
+  opacity:.6;
+  font-size:13px;
 }
 </style>
 </head>
+
 <body>
 
 <!-- PHONG THƯ -->
@@ -122,12 +122,12 @@ body{
   </div>
 </div>
 
-<!-- NHẠC (bạn thay file mp3 tải từ TikTok vào đây) -->
-<audio id="music" loop>
+<!-- NHẠC -->
+<audio id="music" loop muted autoplay>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<div class="music-note">🎧 Nhạc chill Noel</div>
+<div class="music-note">🎧 Chill Noel</div>
 
 <script>
 /* ===== TUYẾT ===== */
@@ -144,7 +144,7 @@ for(let i=0;i<45;i++){
 /* ===== ĐÁNH CHỮ ===== */
 const content=`| Nay là 24/12 |
 
-Noel chúc các bạn
+Noel chúc bạn
 
 Một mùa giáng sinh
 An lành, tràn đầy niềm
@@ -169,12 +169,17 @@ function openLetter(){
   document.getElementById('text').innerHTML='';
   i=0;
   typeText();
-  document.getElementById('music').play();
 }
 
-function closeLetter(){
-  document.getElementById('popup').style.display='none';
-}
+/* ===== BẬT TIẾNG KHI NGƯỜI DÙNG CLICK LẦN ĐẦU ===== */
+document.addEventListener('click',()=>{
+  const music=document.getElementById('music');
+  if(music.muted){
+    music.muted=false;
+    music.volume=0.7;
+  }
+},{ once:true });
 </script>
+
 </body>
 </html>
