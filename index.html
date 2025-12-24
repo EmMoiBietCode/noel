@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Noel Chill 24/12</title>
+<title>Noel vui ve</title>
 
 <style>
 *{
@@ -23,7 +23,6 @@ body{
 .snow{
   position:fixed;
   top:-10px;
-  color:white;
   opacity:0.7;
   animation:fall linear infinite;
 }
@@ -31,8 +30,8 @@ body{
   to{ transform:translateY(110vh); }
 }
 
-/* ===== PHONG THƯ ===== */
-.envelope-box{
+/* ===== TRUNG TÂM ===== */
+.center{
   position:absolute;
   top:50%;
   left:50%;
@@ -40,18 +39,25 @@ body{
   text-align:center;
 }
 
-.envelope{
+/* ===== CÂY NOEL ===== */
+.tree{
   font-size:190px;
-  animation:float 3s ease-in-out infinite;
+  transition:1s ease;
 }
 
-@keyframes float{
-  0%,100%{ transform:translateY(0); }
-  50%{ transform:translateY(-12px); }
+/* ===== HỘP QUÀ ===== */
+.gift{
+  position:absolute;
+  top:50%;
+  left:-200px;
+  transform:translateY(-50%);
+  font-size:160px;
+  transition:1s ease;
 }
 
-.open-btn{
-  margin-top:18px;
+/* ===== NÚT ===== */
+.btn{
+  margin-top:20px;
   padding:12px 32px;
   border:none;
   border-radius:30px;
@@ -62,7 +68,7 @@ body{
   backdrop-filter:blur(10px);
   transition:.3s;
 }
-.open-btn:hover{
+.btn:hover{
   background:rgba(255,255,255,0.35);
 }
 
@@ -109,11 +115,26 @@ body{
 
 <body>
 
-<!-- PHONG THƯ -->
-<div class="envelope-box">
-  <div class="envelope">✉️</div>
-  <button class="open-btn" onclick="openLetter()">Mở thư 💌</button>
+<!-- TUYẾT -->
+<script>
+for(let i=0;i<45;i++){
+  let s=document.createElement('div');
+  s.className='snow';
+  s.innerHTML='❄';
+  s.style.left=Math.random()*100+'vw';
+  s.style.fontSize=10+Math.random()*18+'px';
+  s.style.animationDuration=4+Math.random()*6+'s';
+  document.body.appendChild(s);
+}
+</script>
+
+<!-- TRUNG TÂM -->
+<div class="center">
+  <div class="tree" id="tree">🎄</div>
+  <button class="btn" onclick="handleGift()">Xem quà 🎁</button>
 </div>
+
+<div class="gift" id="gift">🎁</div>
 
 <!-- POPUP -->
 <div class="popup" id="popup" onclick="closeLetter()">
@@ -126,22 +147,12 @@ body{
 <audio id="music" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
-
 <div class="music-note">🎧 Chill Noel</div>
 
 <script>
-/* ===== TUYẾT ===== */
-for(let i=0;i<45;i++){
-  let s=document.createElement('div');
-  s.className='snow';
-  s.innerHTML='❄';
-  s.style.left=Math.random()*100+'vw';
-  s.style.fontSize=10+Math.random()*18+'px';
-  s.style.animationDuration=4+Math.random()*6+'s';
-  document.body.appendChild(s);
-}
+let step = 0;
 
-/* ===== ĐÁNH CHỮ ===== */
+/* ===== NỘI DUNG ===== */
 const content=`| Nay là 24/12 |
 
 Noel chúc bạn
@@ -164,15 +175,30 @@ function typeText(){
   }
 }
 
-function openLetter(){
-  document.getElementById('popup').style.display='flex';
-  document.getElementById('text').innerHTML='';
-  i=0;
-  typeText();
+/* ===== XỬ LÝ BẤM ===== */
+function handleGift(){
+  const tree=document.getElementById('tree');
+  const gift=document.getElementById('gift');
+  const music=document.getElementById('music');
 
-  const music = document.getElementById('music');
-  music.volume = 0.7;
-  music.play();
+  if(step===0){
+    // Lần 1: hộp quà vào – cây bay ra
+    gift.style.left='50%';
+    gift.style.transform='translate(-50%,-50%)';
+    tree.style.transform='translateX(500px) rotate(20deg)';
+    tree.style.opacity='0';
+    step=1;
+  }
+  else if(step===1){
+    // Lần 2: mở quà – hiện popup + nhạc
+    document.getElementById('popup').style.display='flex';
+    document.getElementById('text').innerHTML='';
+    i=0;
+    typeText();
+    music.volume=0.7;
+    music.play();
+    step=2;
+  }
 }
 
 function closeLetter(){
