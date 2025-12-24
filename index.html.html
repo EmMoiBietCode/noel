@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Noel Chill 24/12</title>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif;
+}
+
+body{
+  height:100vh;
+  background:linear-gradient(180deg,#0b2c4d,#000);
+  overflow:hidden;
+  color:white;
+}
+
+/* ===== TUYẾT CHILL ===== */
+.snow{
+  position:fixed;
+  top:-10px;
+  color:white;
+  opacity:0.8;
+  animation:fall linear infinite;
+}
+
+@keyframes fall{
+  to{ transform:translateY(110vh); }
+}
+
+/* ===== PHONG THƯ ===== */
+.envelope-box{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+}
+
+.envelope{
+  font-size:180px;
+  animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-10px); }
+}
+
+.open-btn{
+  margin-top:20px;
+  padding:12px 30px;
+  border:none;
+  border-radius:30px;
+  background:rgba(255,255,255,0.15);
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  backdrop-filter:blur(10px);
+  transition:0.3s;
+}
+
+.open-btn:hover{
+  background:rgba(255,255,255,0.3);
+}
+
+/* ===== POPUP ===== */
+.popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+.popup-content{
+  width:340px;
+  padding:30px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(15px);
+  animation:fadeUp .4s ease;
+}
+
+@keyframes fadeUp{
+  from{ opacity:0; transform:translateY(20px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+#text{
+  white-space:pre-line;
+  font-size:16px;
+  line-height:1.7;
+  text-align:center;
+}
+
+.music-note{
+  position:fixed;
+  bottom:15px;
+  right:15px;
+  opacity:0.6;
+  font-size:14px;
+}
+</style>
+</head>
+<body>
+
+<!-- PHONG THƯ -->
+<div class="envelope-box">
+  <div class="envelope">✉️</div>
+  <button class="open-btn" onclick="openLetter()">Mở thư 💌</button>
+</div>
+
+<!-- POPUP -->
+<div class="popup" id="popup" onclick="closeLetter()">
+  <div class="popup-content" onclick="event.stopPropagation()">
+    <div id="text"></div>
+  </div>
+</div>
+
+<!-- NHẠC (bạn thay file mp3 tải từ TikTok vào đây) -->
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="music-note">🎧 Nhạc chill Noel</div>
+
+<script>
+/* ===== TUYẾT ===== */
+for(let i=0;i<45;i++){
+  let s=document.createElement('div');
+  s.className='snow';
+  s.innerHTML='❄';
+  s.style.left=Math.random()*100+'vw';
+  s.style.fontSize=10+Math.random()*18+'px';
+  s.style.animationDuration=4+Math.random()*6+'s';
+  document.body.appendChild(s);
+}
+
+/* ===== ĐÁNH CHỮ ===== */
+const content=`| Nay là 24/12 |
+
+Noel chúc các bạn
+
+Một mùa giáng sinh
+An lành, tràn đầy niềm
+Vui và hạnh phúc nha.
+
+Bỏ qua muộn phiền
+Vui vẻ, ấm áp
+Và yêu thương
+❄️ Nhaaa ❄️`;
+
+let i=0;
+function typeText(){
+  if(i<content.length){
+    document.getElementById('text').innerHTML+=content.charAt(i);
+    i++;
+    setTimeout(typeText,55);
+  }
+}
+
+function openLetter(){
+  document.getElementById('popup').style.display='flex';
+  document.getElementById('text').innerHTML='';
+  i=0;
+  typeText();
+  document.getElementById('music').play();
+}
+
+function closeLetter(){
+  document.getElementById('popup').style.display='none';
+}
+</script>
+</body>
+</html>
